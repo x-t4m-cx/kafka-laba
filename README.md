@@ -115,5 +115,3 @@ docker compose up
 - `postgres`
 - `data-service` (порт 8081)
 - `api-service` (порт 8080)
-
-```
