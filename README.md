@@ -71,8 +71,6 @@
   - `GET /api/reports/top-doctors`  
     Топ‑10 врачей по количеству записей.
 
-> Все эти эндпоинты API Service проксируют вызовы во внутренний Data Service.
-
 ---
 
 ### Data Service (порт 8081)
