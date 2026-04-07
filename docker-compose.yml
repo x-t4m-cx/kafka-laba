@@ -59,11 +59,12 @@ services:
     env_file:
       - .env
     environment:
-      SPRING_PROFILES_ACTIVE: docker
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      APPOINTMENTS_TOPIC_NAME: appointments
     networks:
       - internal
 
@@ -73,7 +74,9 @@ services:
       - kafka
       - data-service
     environment:
-      SPRING_PROFILES_ACTIVE: docker
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      APPOINTMENTS_TOPIC_NAME: appointments
+      APPOINTMENTS_DATA_SERVICE_BASE_URL: http://data-service:8081
     ports:
       - "8080:8080"
     networks:

@@ -20,10 +20,6 @@ public class KafkaMessageProducer {
         this.topicName = topicName;
     }
     public void send(Object message, String key) {
-        try {
-            kafkaTemplate.send(topicName, key, message).get(5, TimeUnit.SECONDS);
-        } catch (Exception ex) {
-            throw new IllegalStateException("Failed to send appointment event to Kafka topic '" + topicName + "'", ex);
-        }
+        kafkaTemplate.send(topicName, key, message);
     }
 }

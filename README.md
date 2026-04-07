@@ -50,7 +50,7 @@
 
 - **Поиск записей**
 
-  - `GET /api/appointments`
+  - `GET /api/appointments/search`
   - Параметры (все опциональные):
     - `patientName` — фильтр по имени пациента (substring, регистронезависимо)
     - `doctorName` — фильтр по имени врача
@@ -58,7 +58,7 @@
     - `to` — дата-время до
   - Пример:
 
-    `GET /api/appointments?patientName=Иванов&from=2026-03-01T00:00:00&to=2026-03-31T23:59:59`
+    `GET /api/appointments/search?patientName=Иванов&from=2026-03-01T00:00:00&to=2026-03-31T23:59:59`
 
 - **Отчёты**
 
@@ -73,12 +73,14 @@
 
 ---
 
-### Data Service (порт 8081)
+### Data Service
 
-База URL: `http://localhost:8081/api`
+**Сервис расположен во внутренней сети**
+
+База URL: `http://data-service:8081`  
 
 - **Поиск записей**: `GET /api/appointments/search`  
-  Параметры те же, что у `GET /api/appointments` в API Service.
+  Параметры те же, что у `GET /api/appointments/search` в API Service.
 
 - **Отчёты**:
   - `GET /api/reports/appointments-per-day`
@@ -111,5 +113,5 @@ docker compose up
 - `zookeeper`
 - `kafka`
 - `postgres`
-- `data-service` (порт 8081)
+- `data-service`
 - `api-service` (порт 8080)

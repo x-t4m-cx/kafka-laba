@@ -24,7 +24,7 @@ public class AppointmentsController {
         return ResponseEntity.accepted().build();
     }
 
-    @GetMapping
+    @GetMapping("/search")
     public ResponseEntity<Object> searchAppointments(
             @RequestParam(required = false) String patientName,
             @RequestParam(required = false) String doctorName,
