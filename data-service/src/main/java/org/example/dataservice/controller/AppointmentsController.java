@@ -31,8 +31,8 @@ public class AppointmentsController {
             @RequestParam(required = false) String from,
             @RequestParam(required = false) String to
     ) {
-        LocalDateTime fromDateTime = from != null && !from.isBlank() ? LocalDateTime.parse(from) : null;
-        LocalDateTime toDateTime = to != null && !to.isBlank() ? LocalDateTime.parse(to) : null;
+        LocalDateTime fromDateTime = appointmentService.parseDateTimeOrNull(from);
+        LocalDateTime toDateTime = appointmentService.parseDateTimeOrNull(to);
 
         List<Appointment> appointments = appointmentService.search(patientName, doctorName, fromDateTime, toDateTime);
 

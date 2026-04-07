@@ -1,14 +1,23 @@
 package org.example.dataservice.dto;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class AppointmentEvent {
-
+    private UUID appointmentId;
     private String patientName;
     private String doctorName;
     private String doctorSpecialty;
     private LocalDateTime appointmentDateTime;
     private String reason;
+
+    public UUID getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(UUID appointmentId) {
+        this.appointmentId = appointmentId;
+    }
 
     public String getPatientName() {
         return patientName;

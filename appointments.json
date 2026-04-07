@@ -1,0 +1,81 @@
+[
+{
+  "patientName": "Иван Петров",
+  "doctorName": "Алексей Смирнов",
+  "doctorSpecialty": "Кардиолог",
+  "appointmentDateTime": "2026-04-15T10:30:00",
+  "reason": "Боли в груди, одышка"
+},
+{
+  "patientName": "Мария Иванова",
+  "doctorName": "Алексей Смирнов",
+  "doctorSpecialty": "Кардиолог",
+  "appointmentDateTime": "2026-04-17T14:15:00",
+  "reason": "Повышенное давление"
+},
+{
+  "patientName": "Сергей Козлов",
+  "doctorName": "Алексей Смирнов",
+  "doctorSpecialty": "Кардиолог",
+  "appointmentDateTime": "2026-04-19T09:00:00",
+  "reason": "Плановый осмотр после инфаркта"
+},
+{
+  "patientName": "Анна Сидорова",
+  "doctorName": "Елена Орлова",
+  "doctorSpecialty": "Невролог",
+  "appointmentDateTime": "2026-04-16T11:30:00",
+  "reason": "Мигрень, головокружение"
+},
+{
+  "patientName": "Екатерина Морозова",
+  "doctorName": "Елена Орлова",
+  "doctorSpecialty": "Невролог",
+  "appointmentDateTime": "2026-04-18T15:45:00",
+  "reason": "Онемение пальцев рук"
+},
+{
+  "patientName": "Андрей Новиков",
+  "doctorName": "Елена Орлова",
+  "doctorSpecialty": "Невролог",
+  "appointmentDateTime": "2026-04-20T13:00:00",
+  "reason": "Боли в спине, прострел"
+},
+{
+  "patientName": "Татьяна Кузнецова",
+  "doctorName": "Дмитрий Васильев",
+  "doctorSpecialty": "Офтальмолог",
+  "appointmentDateTime": "2026-04-15T08:30:00",
+  "reason": "Ухудшение зрения"
+},
+{
+  "patientName": "Михаил Федоров",
+  "doctorName": "Дмитрий Васильев",
+  "doctorSpecialty": "Офтальмолог",
+  "appointmentDateTime": "2026-04-16T10:00:00",
+  "reason": "Покраснение глаз, сухость"
+},
+{
+  "patientName": "Ольга Соколова",
+  "doctorName": "Дмитрий Васильев",
+  "doctorSpecialty": "Офтальмолог",
+  "appointmentDateTime": "2026-04-17T14:30:00",
+  "reason": "Проверка остроты зрения"
+},
+{
+  "patientName": "Денис Зайцев",
+  "doctorName": "Дмитрий Васильев",
+  "doctorSpecialty": "Офтальмолог",
+  "appointmentDateTime": "2026-04-18T16:15:00",
+  "reason": "Подбор очков"
+},
+  {
+    "Поиск по имени пациента" : "?patientName=Иван Петров",
+    "Поиск по имени врача" : "?doctorName=Алексей Смирнов",
+    "Поиск по диапазону дат" : "?from=2026-04-15T00:00:00&to=2026-04-17T23:59:59",
+    "Комбинированный поиск" : "?patientName=Анна Сидорова&doctorName=Елена Орлова",
+    "Отчет по кол-ву записей на день" : "/reports/appointments-per-day",
+
+  }
+]
+

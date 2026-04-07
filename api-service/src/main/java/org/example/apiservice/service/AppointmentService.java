@@ -1,35 +1,25 @@
 package org.example.apiservice.service;
 
+import lombok.RequiredArgsConstructor;
+import org.example.apiservice.client.kafka.KafkaMessageProducer;
+import org.example.apiservice.client.rest.AppointmentApiClient;
 import org.example.apiservice.dto.AppointmentRequest;
-import org.springframework.beans.factory.annotation.Value;
+import org.example.apiservice.mapper.AppointmentEventMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
+@RequiredArgsConstructor
 public class AppointmentService {
 
-    private final KafkaTemplate<String, Object> kafkaTemplate;
-    private final RestTemplate restTemplate;
-    private final String topicName;
-    private final String dataServiceBaseUrl;
-
-    public AppointmentService(
-            KafkaTemplate<String, Object> kafkaTemplate,
-            RestTemplate restTemplate,
-            @Value("${appointments.topic-name}") String topicName,
-            @Value("${appointments.data-service-base-url}") String dataServiceBaseUrl
-    ) {
-        this.kafkaTemplate = kafkaTemplate;
-        this.restTemplate = restTemplate;
-        this.topicName = topicName;
-        this.dataServiceBaseUrl = dataServiceBaseUrl;
-    }
+    private final KafkaMessageProducer kafkaProducer;
+    private final AppointmentApiClient apiClient;
+    private final AppointmentEventMapper eventMapper;
 
     public void sendToKafka(AppointmentRequest request) {
-        kafkaTemplate.send(topicName, request);
+        var event = eventMapper.toEvent(request);
+        String appointmentsKey = buildAppointmentKey(request);
+        kafkaProducer.send(event, appointmentsKey);
     }
 
     public ResponseEntity<Object> searchAppointments(
@@ -38,38 +28,16 @@ public class AppointmentService {
             String from,
             String to
     ) {
-        String url = dataServiceBaseUrl + "/api/appointments/search";
-
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
-
-        if (patientName != null && !patientName.isBlank()) {
-            builder.queryParam("patientName", patientName);
-        }
-        if (doctorName != null && !doctorName.isBlank()) {
-            builder.queryParam("doctorName", doctorName);
-        }
-        if (from != null && !from.isBlank()) {
-            builder.queryParam("from", from);
-        }
-        if (to != null && !to.isBlank()) {
-            builder.queryParam("to", to);
-        }
-
-        return restTemplate.getForEntity(builder.toUriString(), Object.class);
+        return apiClient.searchAppointments(patientName, doctorName, from, to);
     }
 
-    public ResponseEntity<Object> getAppointmentsPerDay() {
-        String url = dataServiceBaseUrl + "/api/reports/appointments-per-day";
-        return restTemplate.getForEntity(url, Object.class);
+    private String buildAppointmentKey(AppointmentRequest request) {
+        String doctorName = normalize(request.getDoctorName());
+        String doctorSpecialty = normalize(request.getDoctorSpecialty());
+        return doctorName + "|" + doctorSpecialty;
     }
 
-    public ResponseEntity<Object> getTopPatients() {
-        String url = dataServiceBaseUrl + "/api/reports/top-patients";
-        return restTemplate.getForEntity(url, Object.class);
-    }
-
-    public ResponseEntity<Object> getTopDoctors() {
-        String url = dataServiceBaseUrl + "/api/reports/top-doctors";
-        return restTemplate.getForEntity(url, Object.class);
+    private String normalize(String value) {
+        return value == null ? "unknown" : value.trim().toLowerCase();
     }
 }

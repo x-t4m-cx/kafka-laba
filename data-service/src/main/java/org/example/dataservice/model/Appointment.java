@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
            @Index(name = "idx_patient_doctor", columnList = "patient_id, doctor_id")
        })
 public class Appointment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,7 +28,6 @@ public class Appointment {
     @Column(columnDefinition = "TEXT")
     private String reason;
 
-    // Геттеры и сеттеры
     public Long getId() {
         return id;
     }

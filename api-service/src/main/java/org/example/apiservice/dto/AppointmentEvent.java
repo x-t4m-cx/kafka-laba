@@ -1,27 +1,18 @@
 package org.example.apiservice.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
-public class AppointmentRequest {
-
-    @NotBlank
+public class AppointmentEvent {
+    private UUID appointmentId;
     private String patientName;
-
-    @NotBlank
     private String doctorName;
-
     private String doctorSpecialty;
-
-    @NotNull
     private LocalDateTime appointmentDateTime;
-
     private String reason;
 }
-
