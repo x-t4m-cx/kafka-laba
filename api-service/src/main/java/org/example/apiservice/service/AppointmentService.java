@@ -1,5 +1,7 @@
 package org.example.apiservice.service;
 
+import java.util.UUID;
+
 import lombok.RequiredArgsConstructor;
 import org.example.apiservice.client.kafka.KafkaMessageProducer;
 import org.example.apiservice.client.rest.AppointmentApiClient;
@@ -18,7 +20,7 @@ public class AppointmentService {
 
     public void sendToKafka(AppointmentRequest request) {
         var event = eventMapper.toEvent(request);
-        String appointmentsKey = buildAppointmentKey(request);
+        String appointmentsKey = UUID.randomUUID().toString();
         kafkaProducer.send(event, appointmentsKey);
     }
 
@@ -29,15 +31,5 @@ public class AppointmentService {
             String to
     ) {
         return apiClient.searchAppointments(patientName, doctorName, from, to);
-    }
-
-    private String buildAppointmentKey(AppointmentRequest request) {
-        String doctorName = normalize(request.getDoctorName());
-        String doctorSpecialty = normalize(request.getDoctorSpecialty());
-        return doctorName + "|" + doctorSpecialty;
-    }
-
-    private String normalize(String value) {
-        return value == null ? "unknown" : value.trim().toLowerCase();
     }
 }
