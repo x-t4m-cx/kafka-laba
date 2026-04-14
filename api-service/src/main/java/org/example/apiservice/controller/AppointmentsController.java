@@ -2,6 +2,7 @@ package org.example.apiservice.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.apiservice.api.AppointmentsApi;
 import org.example.apiservice.dto.AppointmentRequest;
 import org.example.apiservice.service.AppointmentService;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/appointments")
 @RequiredArgsConstructor
-public class AppointmentsController {
+public class AppointmentsController implements AppointmentsApi {
 
     private final AppointmentService appointmentService;
 
