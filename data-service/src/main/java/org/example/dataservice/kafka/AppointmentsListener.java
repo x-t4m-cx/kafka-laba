@@ -14,7 +14,10 @@ public class AppointmentsListener {
         this.appointmentService = appointmentService;
     }
 
-    @KafkaListener(topics = "${appointments.topic-name}")
+    @KafkaListener(
+            topics = "${appointments.topic-name}",
+            groupId = "appointments-consumer"
+    )
     public void onAppointment(AppointmentEvent event) {
         appointmentService.saveFromEvent(event);
     }

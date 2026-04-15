@@ -1,6 +1,8 @@
 package org.example.apiservice.service;
 
+import java.util.HashMap;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import lombok.RequiredArgsConstructor;
 import org.example.apiservice.client.kafka.KafkaMessageProducer;
@@ -30,6 +32,19 @@ public class AppointmentService {
             String from,
             String to
     ) {
-        return apiClient.searchAppointments(patientName, doctorName, from, to);
+        HashMap<String, String> params = new HashMap<>();
+
+        putIfNotNullOrBlank(params, "patientName", patientName);
+        putIfNotNullOrBlank(params, "doctorName", doctorName);
+        putIfNotNullOrBlank(params, "from", from);
+        putIfNotNullOrBlank(params, "to", to);
+
+        return apiClient.searchAppointments(params);
+    }
+
+    private void putIfNotNullOrBlank(HashMap<String, String> params, String parameter, String value) {
+        if (value != null && !value.isBlank()) {
+            params.put(parameter, value);
+        }
     }
 }
